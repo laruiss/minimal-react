@@ -20,11 +20,11 @@ const BookPage = () => {
           { book?.title }
         </h1>
         <p>
-          by {book.author}
+          by {book?.author}
         </p>
       </header>
       <article>
-        {book.desc}
+        {book?.desc}
       </article>
     </>
   )

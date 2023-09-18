@@ -3,7 +3,7 @@ import {
 } from "react-router-dom"
 
 import Home from './pages/Home.jsx'
-import BookPage from "./pages/Book.jsx";
+import BookPage from "./pages/BookPage.jsx";
 
 const router = createBrowserRouter([
   {
