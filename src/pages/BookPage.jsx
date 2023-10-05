@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import {useParams} from "react-router-dom";
 
-import { get } from '../api/api-client'
+import { getBook } from '../api/api-client'
 
 const BookPage = () => {
   
@@ -9,7 +9,7 @@ const BookPage = () => {
   const {id} = useParams();
 
   useEffect(() => {
-    get(`/books/${id}`)
+    getBook(id)
       .then(setBook)
   }, [])
 

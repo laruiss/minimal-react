@@ -1,13 +1,40 @@
+import axios from 'axios'
+
 const apiBaseUrl = import.meta.env.VITE_APP_API_BASE_URL
 
-const get = (url, options) => fetch(`${apiBaseUrl}${url}`, options).then(res => res.json())
-const del = (url, options) => fetch(`${apiBaseUrl}${url}`, options).then(res => res.json())
-const post = (url, options) => fetch(`${apiBaseUrl}${url}`, options).then(res => res.json())
-const patch = (url, options) => fetch(`${apiBaseUrl}${url}`, options).then(res => res.json())
+export const apiClient = axios.create({
+  baseURL: apiBaseUrl,
+})
 
-export {
-  post,
-  patch,
-  get,
-  del,
+export const signIn = async (email, password) => {
+  const response = await apiClient.post('/auth/tokens', {
+    email,
+    password,
+  })
+  
+  localStorage.setItem('token', response.data.token)
+}
+
+export const getBooks = async () => {
+  const response = await apiClient.get('/books')
+  return response.data
+}
+
+export const getBook = async (id) => {
+  const response = await apiClient.get(`/books/${id}`)
+  return response.data
+}
+
+
+export const removeBook = async (id) => {
+  const token = localStorage.getItem('token') 
+  if (token) {
+    const response = await apiClient.delete(`/books/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  }
+  throw new Error('Unauthorized')   
 }
